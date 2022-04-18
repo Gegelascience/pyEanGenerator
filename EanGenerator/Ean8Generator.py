@@ -4,10 +4,11 @@ from EanCheck.EanCheckHelper import EanCheckHelper, EanType
 
 
 class InvalidEan8(Exception):
+    
+    def __init__(self):
+        self.message = "Invalid EAN 8"
 
-    pass
-
-class Ean13Generator:
+class Ean8Generator:
 
     eanValue:str = None
 
@@ -16,4 +17,7 @@ class Ean13Generator:
             self.eanValue = value
 
         else:
-            raise InvalidEan8()
+            raise InvalidEan8
+
+
+Ean8Generator(None)
