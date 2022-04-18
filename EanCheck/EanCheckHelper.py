@@ -1,13 +1,27 @@
+from enum import Enum
+
+class EanType(Enum):
+    EAN8 = 8
+    EAN13 = 13
 
 class EanCheckHelper:
 
     @staticmethod
-    def isCorrectEan(possibleEan:str)-> bool:
+    def isCorrectEan(possibleEan:str, eanTypeToCheck:EanType=None)-> bool:
+
+        if not possibleEan:
+            return False
 
         testLen = len(possibleEan)
 
         # check longueur
-        if not testLen in [8,13,14]:
+        try:
+            testType=EanType(testLen)
+
+            if eanTypeToCheck and not testType == eanTypeToCheck:
+                return False
+
+        except Exception:
             return False
 
         # check regex
@@ -42,9 +56,3 @@ class EanCheckHelper:
 
         return digitCheck
 
-
-
-if __name__ == "__main__":
-    print(EanCheckHelper.isCorrectEan("3666154117284"))
-    print(EanCheckHelper.isCorrectEan("3666154117285"))
-    print(EanCheckHelper.isCorrectEan("36661541172n4"))
