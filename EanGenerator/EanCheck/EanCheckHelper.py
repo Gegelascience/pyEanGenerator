@@ -6,6 +6,11 @@ class EanType(Enum):
 
 
 def isCorrectEan(possibleEan:str, eanTypeToCheck:EanType=None)-> bool:
+    '''
+    test if an string is ether an EAN 8 or an EAN 13
+    possibleEan: string to test
+    eanTypeToCheck (optional): filter to verify strictly if the string is an EAN 8 or an EAN 13 
+    '''
 
     if not possibleEan:
         return False
@@ -16,7 +21,11 @@ def isCorrectEan(possibleEan:str, eanTypeToCheck:EanType=None)-> bool:
     try:
         testType=EanType(testLen)
 
-        if eanTypeToCheck and not testType == eanTypeToCheck:
+        if eanTypeToCheck:
+            if not testType == eanTypeToCheck:
+                return False
+
+        elif testLen not in [8,13]:
             return False
 
     except Exception:
@@ -37,6 +46,9 @@ def isCorrectEan(possibleEan:str, eanTypeToCheck:EanType=None)-> bool:
 
 
 def calculateDigitCheck(eanDigitCheckLess:str) -> str:
+    '''
+    Calculate digit check of an EAN
+    '''
     lenstrCalcul = len(eanDigitCheckLess)
     factor = 3
     somme = 0

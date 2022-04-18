@@ -1,5 +1,4 @@
 
-import os
 import tkinter as tk
 from tkinter import Canvas
 from xml.etree import ElementTree as ET
@@ -18,6 +17,9 @@ class BarcodeRendering:
 
     
     def renderInWindow(self):
+        '''
+        Render barcode on tkinter window
+        '''
         app = tk.Tk()
         app.title(self.eanValue)
         app.geometry("700x200")
@@ -34,6 +36,10 @@ class BarcodeRendering:
 
 
     def saveAsSvg(self,filePath):
+        '''
+        save barcode to svg file
+        filePath: path to saved svg file
+        '''
         initialStr = '''
         <svg version='1.1' baseProfile='full' width='700' height='200' xmlns='http://www.w3.org/2000/svg'>
         </svg>'''
