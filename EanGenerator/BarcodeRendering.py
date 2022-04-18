@@ -4,6 +4,9 @@ from tkinter import Canvas
 from xml.etree import ElementTree as ET
 
 class BarcodeRendering:
+    '''
+    Class to render barcode in different ways
+    '''
     barcodeValue:str = None
     eanValue:str = None
     width:str = 4

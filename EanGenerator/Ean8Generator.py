@@ -3,6 +3,9 @@ from EanCheck.EanCheckHelper import isCorrectEan, EanType
 from BarcodeRendering import BarcodeRendering
 
 class Ean8Generator:
+    '''
+    Generate EAN 8 barcode
+    '''
 
     eanValue:str = None
     barcodeValue:str = None

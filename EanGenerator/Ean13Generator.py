@@ -3,6 +3,9 @@ from EanCheck.EanCheckHelper import isCorrectEan, EanType
 from BarcodeRendering import BarcodeRendering
 
 class Ean13Generator:
+    '''
+    Generate EAN 13 barcode
+    '''
 
     eanValue:str = None
     barcodeValue:str = None
@@ -19,6 +22,9 @@ class Ean13Generator:
 
 
     def __calculateBareCodeValue(self):
+        '''
+        Calculate bits encoding barcode from ean value
+        '''
         self.barcodeValue = SpecialChar.START.value
 
         firstPartRaw = self.eanValue[1:7]
@@ -41,6 +47,9 @@ class Ean13Generator:
         self.barcodeValue = self.barcodeValue + SpecialChar.END.value
 
     def __calculateSetFromPrefix(self, prefix:str, index:int) -> str:
+        '''
+        Found odd set (set A) or even set (set B) by prefix value
+        '''
         if index == 0:
             return "A"
 
