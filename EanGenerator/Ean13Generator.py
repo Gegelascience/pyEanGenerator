@@ -2,11 +2,6 @@ from Utils import setA, setB, setC, SpecialChar
 from EanCheck.EanCheckHelper import isCorrectEan, EanType
 from BarcodeRendering import BarcodeRendering
 
-class InvalidEan13(Exception):
-    
-    def __init__(self):
-        self.message = "Invalid EAN13"
-
 class Ean13Generator:
 
     eanValue:str = None
@@ -20,7 +15,7 @@ class Ean13Generator:
             self.__renderer = BarcodeRendering(self.barcodeValue,self.eanValue)
 
         else:
-            raise InvalidEan13
+            raise Exception("Invalid EAN13")
 
 
     def __calculateBareCodeValue(self):

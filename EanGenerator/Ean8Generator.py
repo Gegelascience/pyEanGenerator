@@ -2,11 +2,6 @@ from Utils import setA, setC, SpecialChar
 from EanCheck.EanCheckHelper import isCorrectEan, EanType
 from BarcodeRendering import BarcodeRendering
 
-class InvalidEan8(Exception):
-    
-    def __init__(self):
-        self.message = "Invalid EAN8"
-
 class Ean8Generator:
 
     eanValue:str = None
@@ -20,7 +15,7 @@ class Ean8Generator:
             self.__renderer = BarcodeRendering(self.barcodeValue,self.eanValue)
 
         else:
-            raise InvalidEan8
+            raise Exception("Invalid EAN8")
 
     def __calculateBareCodeValue(self):
         self.barcodeValue = SpecialChar.START.value
