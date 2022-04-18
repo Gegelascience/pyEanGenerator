@@ -1,8 +1,6 @@
 from Utils import setA, setB, setC, SpecialChar
-from EanCheck.EanCheckHelper import EanCheckHelper, EanType
-
-import tkinter as tk
-from tkinter import Canvas
+from EanCheck.EanCheckHelper import isCorrectEan, EanType
+from BarcodeRendering import BarcodeRendering
 
 class InvalidEan13(Exception):
     
@@ -15,7 +13,7 @@ class Ean13Generator:
     barcodeValue:str = None
 
     def __init__(self,value:str):
-        if EanCheckHelper.isCorrectEan(value, EanType.EAN13):
+        if isCorrectEan(value, EanType.EAN13):
             self.eanValue = value
             self.__calculateBareCodeValue()
 
@@ -80,20 +78,8 @@ class Ean13Generator:
             return "A" if index in [3,5] else "B"
 
     def showBarcode(self):
-        app = tk.Tk()
-        app.title(self.eanValue)
-        app.geometry("700x200")
-        canvas = Canvas(app)
-        canvas.pack()
-
-        width = 4
-        index = 10
-        for el in self.barcodeValue:
-            if el == "1":
-                canvas.create_line(index, 10, index, 50, width=width)
-            index = index + width
-
-        app.mainloop()
+        renderer = BarcodeRendering(self.barcodeValue,self.eanValue,4,"black")
+        renderer.renderInWindow()
 
 
 if __name__ == "__main__":
