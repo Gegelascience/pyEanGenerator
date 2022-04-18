@@ -3,6 +3,10 @@ import tkinter as tk
 from tkinter import Canvas
 
 class BarcodeRendering:
+    barcodeValue:str = None
+    eanValue:str = None
+    width:str = 4
+    color:str = "black"
 
     def __init__(self, barcodeValue:str, eanValue:str, width:int=4, color:str="black"):
         self.barcodeValue = barcodeValue

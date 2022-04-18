@@ -11,11 +11,13 @@ class Ean8Generator:
 
     eanValue:str = None
     barcodeValue:str = None
+    __renderer:BarcodeRendering = None
 
     def __init__(self,value:str):
         if isCorrectEan(value, EanType.EAN8):
             self.eanValue = value
             self.__calculateBareCodeValue()
+            self.__renderer = BarcodeRendering(self.barcodeValue,self.eanValue)
 
         else:
             raise InvalidEan8
@@ -37,8 +39,7 @@ class Ean8Generator:
         self.barcodeValue = self.barcodeValue + SpecialChar.END.value
 
     def showBarcode(self):
-        renderer = BarcodeRendering(self.barcodeValue,self.eanValue,4,"black")
-        renderer.renderInWindow()
+        self.__renderer.renderInWindow()
 
 
 if __name__ == "__main__":
