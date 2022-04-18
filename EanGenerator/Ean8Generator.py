@@ -36,6 +36,9 @@ class Ean8Generator:
     def showBarcode(self):
         self.__renderer.renderInWindow()
 
+    def saveAsSvg(self, filePath):
+        self.__renderer.saveAsSvg(filePath)
+
 
 if __name__ == "__main__":
     test = Ean8Generator("36661541")

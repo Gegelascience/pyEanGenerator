@@ -77,7 +77,11 @@ class Ean13Generator:
     def showBarcode(self):
         self.__renderer.renderInWindow()
 
+    def saveAsSvg(self, filePath):
+        self.__renderer.saveAsSvg(filePath)
+
 
 if __name__ == "__main__":
     test = Ean13Generator("3666154117284")
-    test.showBarcode()
+    #test.showBarcode()
+    test.saveAsSvg("myTest.svg")
