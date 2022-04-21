@@ -1,26 +1,26 @@
 from Utils import setA, setC, SpecialChar
-from EanCheck.EanCheckHelper import isCorrectEan, EanType
+from EanCheck import isCorrectEan, EanType
 from BarcodeRendering import BarcodeRendering
+from EanGeneratorProto import EanGeneratorProto
 
-class Ean8Generator:
+class Ean8Generator(EanGeneratorProto):
     '''
     Generate EAN 8 barcode
     '''
 
     eanValue:str = None
     barcodeValue:str = None
-    __renderer:BarcodeRendering = None
 
     def __init__(self,value:str):
         if isCorrectEan(value, EanType.EAN8):
             self.eanValue = value
-            self.__calculateBareCodeValue()
-            self.__renderer = BarcodeRendering(self.barcodeValue,self.eanValue)
+            self._calculateBareCodeValue()
+            self._renderer = BarcodeRendering(self.barcodeValue,self.eanValue)
 
         else:
             raise Exception("Invalid EAN8")
 
-    def __calculateBareCodeValue(self):
+    def _calculateBareCodeValue(self):
         self.barcodeValue = SpecialChar.START.value
 
         firstPartRaw = self.eanValue[:4]
@@ -36,11 +36,6 @@ class Ean8Generator:
 
         self.barcodeValue = self.barcodeValue + SpecialChar.END.value
 
-    def showBarcode(self):
-        self.__renderer.renderInWindow()
-
-    def saveAsSvg(self, filePath):
-        self.__renderer.saveAsSvg(filePath)
 
 
 if __name__ == "__main__":

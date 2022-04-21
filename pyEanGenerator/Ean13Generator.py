@@ -1,27 +1,28 @@
 from Utils import setA, setB, setC, SpecialChar
-from EanCheck.EanCheckHelper import isCorrectEan, EanType
+from EanCheck import isCorrectEan, EanType
 from BarcodeRendering import BarcodeRendering
+from EanGeneratorProto import EanGeneratorProto
 
-class Ean13Generator:
+class Ean13Generator(EanGeneratorProto):
     '''
     Generate EAN 13 barcode
     '''
 
     eanValue:str = None
     barcodeValue:str = None
-    __renderer:BarcodeRendering = None
 
     def __init__(self,value:str):
+        super().__init__()
         if isCorrectEan(value, EanType.EAN13):
             self.eanValue = value
-            self.__calculateBareCodeValue()
-            self.__renderer = BarcodeRendering(self.barcodeValue,self.eanValue)
+            self._calculateBareCodeValue()
+            self._renderer = BarcodeRendering(self.barcodeValue,self.eanValue)
 
         else:
             raise Exception("Invalid EAN13")
 
 
-    def __calculateBareCodeValue(self):
+    def _calculateBareCodeValue(self):
         '''
         Calculate bits encoding barcode from ean value
         '''
@@ -83,14 +84,9 @@ class Ean13Generator:
         elif prefix == "9":
             return "A" if index in [3,5] else "B"
 
-    def showBarcode(self):
-        self.__renderer.renderInWindow()
-
-    def saveAsSvg(self, filePath):
-        self.__renderer.saveAsSvg(filePath)
 
 
 if __name__ == "__main__":
     test = Ean13Generator("3666154117284")
-    #test.showBarcode()
+    test.showBarcode()
     test.saveAsSvg("myTest.svg")

@@ -2,6 +2,7 @@
 import tkinter as tk
 from tkinter import Canvas
 from xml.etree import ElementTree as ET
+from threading  import Thread
 
 class BarcodeRendering:
     '''
@@ -11,6 +12,7 @@ class BarcodeRendering:
     eanValue:str = None
     width:str = 4
     color:str = "black"
+    __guiThread: Thread= None
 
     def __init__(self, barcodeValue:str, eanValue:str, width:int=4, color:str="black"):
         self.barcodeValue = barcodeValue
@@ -23,6 +25,13 @@ class BarcodeRendering:
         '''
         Render barcode on tkinter window
         '''
+        self.__guiThread = Thread(target=self.__renderWindowInThread)
+
+        self.__guiThread.start()
+
+        
+
+    def __renderWindowInThread(self):
         app = tk.Tk()
         app.title(self.eanValue)
         app.geometry("700x200")
