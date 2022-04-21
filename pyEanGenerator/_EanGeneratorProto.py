@@ -1,4 +1,4 @@
-from BarcodeRendering import BarcodeRendering
+from _BarcodeRendering import BarcodeRendering
 
 class EanGeneratorProto:
     '''

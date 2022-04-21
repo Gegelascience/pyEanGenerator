@@ -1,6 +1,6 @@
 from Utils import setA, setB, setC, SpecialChar
 from EanCheck import isCorrectEan, EanType
-from BarcodeRendering import BarcodeRendering
+from _BarcodeRendering import BarcodeRendering
 from _EanGeneratorProto import EanGeneratorProto
 
 class Ean13Generator(EanGeneratorProto):
