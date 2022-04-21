@@ -2,7 +2,12 @@
 import tkinter as tk
 from tkinter import Canvas
 from xml.etree import ElementTree as ET
-from threading  import Thread
+
+try:
+    from PIL import Image
+    pillowImported = True
+except:
+    pillowImported = False
 
 class BarcodeRendering:
     '''
@@ -12,7 +17,6 @@ class BarcodeRendering:
     eanValue:str = None
     width:str = 4
     color:str = "black"
-    __guiThread: Thread= None
 
     def __init__(self, barcodeValue:str, eanValue:str, width:int=4, color:str="black"):
         self.barcodeValue = barcodeValue
@@ -25,13 +29,6 @@ class BarcodeRendering:
         '''
         Render barcode on tkinter window
         '''
-        self.__guiThread = Thread(target=self.__renderWindowInThread)
-
-        self.__guiThread.start()
-
-        
-
-    def __renderWindowInThread(self):
         app = tk.Tk()
         app.title(self.eanValue)
         app.geometry("700x200")
@@ -73,3 +70,47 @@ class BarcodeRendering:
         ET.register_namespace("","http://www.w3.org/2000/svg")
 
         tree.write(filePath, encoding="utf-8",xml_declaration=True)
+
+    def saveAsImg(self,filePath):
+        if pillowImported:
+            rowSpace = [(255,255,255) for i in range(10)]
+            rowOnlyData = []
+            for line in self.barcodeValue:
+                if line == "1":
+                    rowOnlyData.append((0,0,0))
+                    rowOnlyData.append((0,0,0))
+                    rowOnlyData.append((0,0,0))
+                    rowOnlyData.append((0,0,0))
+                else:
+                    rowOnlyData.append((255,255,255))
+                    rowOnlyData.append((255,255,255))
+                    rowOnlyData.append((255,255,255))
+                    rowOnlyData.append((255,255,255))
+
+            rowWithData = []
+            rowWithData.extend(rowSpace)
+            rowWithData.extend(rowOnlyData)
+            rowWithData.extend(rowSpace)
+
+            lineSpace = [(255,255,255) for i in range(len(rowWithData))]
+
+            linesSpace =[lineSpace for i in range(10)]
+
+            imgArrayData = [rowWithData for i in range(50)]
+
+            imgArray = []
+
+            imgArray.extend(linesSpace)
+            imgArray.extend(imgArrayData)
+            imgArray.extend(linesSpace)
+
+            img = Image.new('RGB', [len(rowWithData),len(imgArray)], 255)
+            dataImg = img.load()
+
+            for x in range(img.size[0]):
+                for y in range(img.size[1]):
+                    dataImg[x,y] = imgArray[y][x]
+            
+            img.save(filePath)
+        else:
+            raise Exception("please install pillow package to generate an image")

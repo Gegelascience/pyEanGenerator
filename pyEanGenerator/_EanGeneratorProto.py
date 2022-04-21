@@ -5,6 +5,8 @@ class EanGeneratorProto:
     abstract class for Generate EAN
     '''
 
+    eanValue:str = None
+    barcodeValue:str = None
     _renderer:BarcodeRendering = None
 
     def __init__(self):
@@ -18,3 +20,6 @@ class EanGeneratorProto:
 
     def saveAsSvg(self, filePath):
         self._renderer.saveAsSvg(filePath)
+
+    def saveAsImg(self, filePath):
+        self._renderer.saveAsImg(filePath)
