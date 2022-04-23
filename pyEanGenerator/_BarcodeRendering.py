@@ -13,30 +13,26 @@ class BarcodeRendering:
     '''
     Class to render barcode in different ways
     '''
-    barcodeValue:str = None
-    eanValue:str = None
     width:str = 4
     color:str = "black"
 
-    def __init__(self, barcodeValue:str, eanValue:str, width:int=4, color:str="black"):
-        self.barcodeValue = barcodeValue
-        self.eanValue = eanValue
+    def __init__(self, width:int=4, color:str="black"):
         self.width = width
         self.color = color
 
     
-    def renderInWindow(self):
+    def renderInWindow(self, eanValue:str, barcodeValue:str):
         '''
         Render barcode on tkinter window
         '''
         app = tk.Tk()
-        app.title(self.eanValue)
+        app.title(eanValue)
         app.geometry("700x200")
         canvas = Canvas(app)
         canvas.pack()
 
         index = 10
-        for el in self.barcodeValue:
+        for el in barcodeValue:
             if el == "1":
                 canvas.create_line(index, 10, index, 50, width=self.width, fill=self.color)
             index = index + self.width
@@ -44,7 +40,7 @@ class BarcodeRendering:
         app.mainloop()
 
 
-    def saveAsSvg(self,filePath):
+    def saveAsSvg(self,filePath, barcodeValue:str):
         '''
         save barcode to svg file
         filePath: path to saved svg file
@@ -56,7 +52,7 @@ class BarcodeRendering:
         barcodeZone = ET.SubElement(root,"g")
         barcodeZone.set("stroke", self.color)
         index = 10
-        for el in self.barcodeValue:
+        for el in barcodeValue:
             if el == "1":
                 line = ET.SubElement(barcodeZone,"line")
                 line.set("stroke-width",str(self.width))
@@ -71,11 +67,11 @@ class BarcodeRendering:
 
         tree.write(filePath, encoding="utf-8",xml_declaration=True)
 
-    def saveAsImg(self,filePath):
+    def saveAsImg(self,filePath, barcodeValue:str):
         if pillowImported:
             rowSpace = [(255,255,255) for i in range(10)]
             rowOnlyData = []
-            for line in self.barcodeValue:
+            for line in barcodeValue:
                 if line == "1":
                     rowOnlyData.append((0,0,0))
                     rowOnlyData.append((0,0,0))

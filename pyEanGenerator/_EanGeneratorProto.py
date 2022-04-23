@@ -16,10 +16,10 @@ class EanGeneratorProto:
         pass
 
     def showBarcode(self):
-        self._renderer.renderInWindow()
+        self._renderer.renderInWindow(self.eanValue, self.barcodeValue)
 
     def saveAsSvg(self, filePath):
-        self._renderer.saveAsSvg(filePath)
+        self._renderer.saveAsSvg(filePath, self.barcodeValue)
 
     def saveAsImg(self, filePath):
-        self._renderer.saveAsImg(filePath)
+        self._renderer.saveAsImg(filePath, self.barcodeValue)

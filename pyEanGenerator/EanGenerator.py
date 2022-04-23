@@ -12,7 +12,7 @@ class Ean13Generator(EanGeneratorProto):
         if isCorrectEan(value, EanType.EAN13):
             self.eanValue = value
             self._calculateBareCodeValue()
-            self._renderer = BarcodeRendering(self.barcodeValue,self.eanValue)
+            self._renderer = BarcodeRendering()
 
         else:
             raise Exception("Invalid EAN13")
@@ -89,7 +89,7 @@ class Ean8Generator(EanGeneratorProto):
         if isCorrectEan(value, EanType.EAN8):
             self.eanValue = value
             self._calculateBareCodeValue()
-            self._renderer = BarcodeRendering(self.barcodeValue,self.eanValue)
+            self._renderer = BarcodeRendering()
 
         else:
             raise Exception("Invalid EAN8")
