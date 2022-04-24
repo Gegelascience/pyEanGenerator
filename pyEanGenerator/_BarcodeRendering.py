@@ -14,9 +14,10 @@ class BarcodeRendering:
     Class to render barcode in different ways
     '''
     width:str = 4
+    height:str = 40
     color:str = "black"
 
-    def __init__(self, width:int=4, color:str="black"):
+    def __init__(self, width:int=4, height:int = 40, color:str="black"):
         self.width = width
         self.color = color
 
@@ -34,7 +35,7 @@ class BarcodeRendering:
         index = 10
         for el in barcodeValue:
             if el == "1":
-                canvas.create_line(index, 10, index, 50, width=self.width, fill=self.color)
+                canvas.create_line(index, 10, index, 10 + self.height, width=self.width, fill=self.color)
             index = index + self.width
 
         app.mainloop()
@@ -58,7 +59,7 @@ class BarcodeRendering:
                 line.set("stroke-width",str(self.width))
                 line.set("y1",str(10))
                 line.set("x1",str(index))
-                line.set("y2",str(50))
+                line.set("y2",str(10 + self.height))
                 line.set("x2",str(index))
             index = index + self.width
 
@@ -92,7 +93,7 @@ class BarcodeRendering:
 
             linesSpace =[lineSpace for i in range(10)]
 
-            imgArrayData = [rowWithData for i in range(50)]
+            imgArrayData = [rowWithData for i in range(10 + self.height)]
 
             imgArray = []
 
