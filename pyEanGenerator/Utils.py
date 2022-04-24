@@ -1,11 +1,3 @@
-from enum import Enum
-
-class SpecialChar(Enum):
-    START="101"
-    CENTER="01010"
-    END="101"
-
-
 
 setA = {
     "0":"0001101",

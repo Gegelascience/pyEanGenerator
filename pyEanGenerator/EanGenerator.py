@@ -1,9 +1,32 @@
-from Utils import setA, setB, setC, SpecialChar
+from Utils import setA, setB, setC
 from EanCheck import isCorrectEan, EanType
 from _BarcodeRendering import BarcodeRendering
-from _EanGeneratorProto import EanGeneratorProto
 
-class Ean13Generator(EanGeneratorProto):
+class _EanGeneratorProto:
+    '''
+    abstract class for Generate EAN
+    '''
+
+    eanValue:str = None
+    barcodeValue:str = None
+    _renderer:BarcodeRendering = None
+
+    def __init__(self):
+        pass
+
+    def _calculateBareCodeValue(self):
+        pass
+
+    def showBarcode(self):
+        self._renderer.renderInWindow(self.eanValue, self.barcodeValue)
+
+    def saveAsSvg(self, filePath):
+        self._renderer.saveAsSvg(filePath, self.barcodeValue)
+
+    def saveAsImg(self, filePath):
+        self._renderer.saveAsImg(filePath, self.barcodeValue)
+
+class Ean13Generator(_EanGeneratorProto):
     '''
     Generate EAN 13 barcode
     '''
@@ -22,7 +45,7 @@ class Ean13Generator(EanGeneratorProto):
         '''
         Calculate bits encoding barcode from ean value
         '''
-        self.barcodeValue = SpecialChar.START.value
+        self.barcodeValue = "101"
 
         firstPartRaw = self.eanValue[1:7]
         secondPartRaw = self.eanValue[7:]
@@ -36,12 +59,12 @@ class Ean13Generator(EanGeneratorProto):
             else:
                 self.barcodeValue = self.barcodeValue + setB[element]
 
-        self.barcodeValue = self.barcodeValue + SpecialChar.CENTER.value
+        self.barcodeValue = self.barcodeValue + "01010"
 
         for element in secondPartRaw:
             self.barcodeValue = self.barcodeValue + setC[element]
 
-        self.barcodeValue = self.barcodeValue + SpecialChar.END.value
+        self.barcodeValue = self.barcodeValue + "101"
 
     def __calculateSetFromPrefix(self, prefix:str, index:int) -> str:
         '''
@@ -80,7 +103,7 @@ class Ean13Generator(EanGeneratorProto):
         elif prefix == "9":
             return "A" if index in [3,5] else "B"
 
-class Ean8Generator(EanGeneratorProto):
+class Ean8Generator(_EanGeneratorProto):
     '''
     Generate EAN 8 barcode
     '''
@@ -95,7 +118,7 @@ class Ean8Generator(EanGeneratorProto):
             raise Exception("Invalid EAN8")
 
     def _calculateBareCodeValue(self):
-        self.barcodeValue = SpecialChar.START.value
+        self.barcodeValue = "101"
 
         firstPartRaw = self.eanValue[:4]
         secondPartRaw = self.eanValue[4:]
@@ -103,20 +126,19 @@ class Ean8Generator(EanGeneratorProto):
         for element in firstPartRaw:
             self.barcodeValue = self.barcodeValue + setA[element]
 
-        self.barcodeValue = self.barcodeValue + SpecialChar.CENTER.value
+        self.barcodeValue = self.barcodeValue + "01010"
 
         for element in secondPartRaw:
             self.barcodeValue = self.barcodeValue + setC[element]
 
-        self.barcodeValue = self.barcodeValue + SpecialChar.END.value
+        self.barcodeValue = self.barcodeValue + "101"
 
 if __name__ == "__main__":
     test = Ean13Generator("3666154117284")
     test.showBarcode()
     test.saveAsSvg("myTest.svg")
-
     test.saveAsImg("mytest.png")
 
-    test2 = Ean8Generator("36661541")
-    test2.showBarcode()
-    test2.saveAsSvg("myTest2.svg")
+    #test2 = Ean8Generator("36661541")
+    #test2.showBarcode()
+    #test2.saveAsSvg("myTest2.svg")
