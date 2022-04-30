@@ -61,7 +61,7 @@ def calculateDigitCheck(eanDigitCheckLess:str) -> str:
         somme += int(eanDigitCheckLess[index]) * factor
         factor = 4 - factor
         
-    digitCheck = str(10 - (somme % 10))
+    digitCheck = str((10 - (somme % 10))%10)
 
     return digitCheck
 
