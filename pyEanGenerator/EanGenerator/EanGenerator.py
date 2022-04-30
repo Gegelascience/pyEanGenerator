@@ -1,4 +1,4 @@
-from .EanCheck import isCorrectEan, EanType
+from ..EanCheck import isCorrectEan, EanType
 from ._BarcodeRendering import BarcodeRendering
 
 
