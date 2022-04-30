@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="pyEanGenerator",
-    version="0.0.7",
+    version="0.0.8",
     author="VERCHERE Rémi",
     author_email="remi.verchere2@gmail.com",
     description="A simple package to generate EAN13 and EAN8",

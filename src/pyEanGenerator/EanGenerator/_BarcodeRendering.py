@@ -29,7 +29,7 @@ class BarcodeRendering:
         app = tk.Tk()
         app.title(eanValue)
         app.geometry("700x200")
-        canvas = Canvas(app)
+        canvas = Canvas(app,width=len(barcodeValue)*10)
         canvas.pack()
 
         index = 10
