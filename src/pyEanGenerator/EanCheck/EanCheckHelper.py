@@ -32,7 +32,7 @@ def isCorrectEan(possibleEan:str, eanTypeToCheck:EanType=None)-> bool:
         return False
 
     # check regex
-    if not possibleEan.isnumeric():
+    if not (possibleEan.isnumeric() and int(possibleEan) > 0):
         return False
 
 
@@ -54,7 +54,7 @@ def calculateDigitCheck(eanDigitCheckLess:str) -> str:
     somme = 0
 
     # check regex
-    if not eanDigitCheckLess.isnumeric():
+    if not (eanDigitCheckLess.isnumeric() and int(eanDigitCheckLess) >0):
         return "KO"
 
     for index in range(lenstrCalcul-1,-1,-1):
