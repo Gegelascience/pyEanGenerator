@@ -114,7 +114,7 @@ class Ean13Generator(_EanGeneratorProto):
         if index == 0:
             return "A"
 
-        if prefix == 0:
+        if prefix == "0":
             return "A"
 
         elif prefix == "1":
